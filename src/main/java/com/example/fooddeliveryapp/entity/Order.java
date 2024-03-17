@@ -1,6 +1,5 @@
 package com.example.fooddeliveryapp.entity;
 
-import com.example.fooddeliveryapp.enums.CustomerStatus;
 import com.example.fooddeliveryapp.enums.OrderStatus;
 import com.example.fooddeliveryapp.enums.PaymentMethods;
 import jakarta.persistence.*;

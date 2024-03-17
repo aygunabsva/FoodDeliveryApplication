@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.entity;
 
+import com.example.fooddeliveryapp.enums.UserStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -38,4 +39,13 @@ public class Users {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
+
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
+
+    public Users(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
 }

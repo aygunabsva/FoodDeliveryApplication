@@ -1,6 +1,5 @@
 package com.example.fooddeliveryapp.entity;
 
-import com.example.fooddeliveryapp.enums.CustomerStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +14,4 @@ public class Customer {
     @JoinColumn(name = "user_id")
     private Users user;
 
-    @Enumerated(EnumType.STRING)
-    private CustomerStatus customerStatus;
 }

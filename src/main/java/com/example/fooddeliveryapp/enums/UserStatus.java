@@ -1,5 +1,5 @@
 package com.example.fooddeliveryapp.enums;
 
-public enum CustomerStatus {
+public enum UserStatus {
     ACTIVE, INACTIVE
 }
