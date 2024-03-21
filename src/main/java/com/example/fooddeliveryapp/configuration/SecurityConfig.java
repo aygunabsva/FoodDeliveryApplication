@@ -39,11 +39,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers(SecurityUrls.whiteList).permitAll()
-                                .requestMatchers(SecurityUrls.adminUrls).hasAnyAuthority("ADMIN")
-                                .requestMatchers(SecurityUrls.customerUrls).hasAnyAuthority("CUSTOMER")
-                                .requestMatchers(SecurityUrls.restaurantUrls).hasAnyAuthority("RESTAURANT")
-                                .requestMatchers(SecurityUrls.restaurantAndCustomerUrls).hasAnyAuthority("RESTAURANT", "CUSTOMER")
-                                .requestMatchers(SecurityUrls.anyAuthenticated).authenticated()
+                                .requestMatchers(SecurityUrls.adminUrls).hasAnyAuthority("admin")
+                                .requestMatchers(SecurityUrls.customerUrls).hasAnyAuthority("customer")
+//                                .requestMatchers(SecurityUrls.personalUrls).hasAnyAuthority("personal")
+//                                .requestMatchers(SecurityUrls.anyAuthenticated).authenticated()
 //                                .anyRequest().permitAll()
                 ).exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint((request, response, authException) ->
@@ -56,8 +55,4 @@ public class SecurityConfig {
         return http.build();
 
     }
-
-
-
-
 }
