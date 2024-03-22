@@ -4,8 +4,8 @@ import com.example.fooddeliveryapp.enums.UserStatus;
 import lombok.Data;
 
 @Data
-public class CustomerDTO {
-    private Long customerId;
+public class PersonalDTO {
+    private Long personalId;
     private Long userId;
     private String name;
     private String surname;

@@ -1,9 +1,7 @@
 package com.example.fooddeliveryapp.service;
 
-import com.example.fooddeliveryapp.dto.LoginReq;
 import com.example.fooddeliveryapp.dto.request.CustomerRegisterDTO;
 import com.example.fooddeliveryapp.dto.response.CustomerDTO;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

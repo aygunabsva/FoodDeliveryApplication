@@ -16,18 +16,20 @@ public class SecurityUrls {
     };
 
     static String[] adminUrls = {
-            "/admin/**"
+            "/admin/**",
+            "/personal/add",
+            "/restaurant/create"
+    };
 
+    static String[] personalUrls = {
+            "/product/add",
+            "/menu/**"
     };
-//
-//    static String[] personalUrls = {
-//
-//    };
-//
+
     static String[] customerUrls = {
-        "/customer/customers"
+            "/customer/customers"
     };
-//
+
 //    static String[] anyAuthenticated = {
 //
 //    };

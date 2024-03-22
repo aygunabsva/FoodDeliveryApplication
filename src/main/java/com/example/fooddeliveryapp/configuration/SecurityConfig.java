@@ -39,9 +39,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers(SecurityUrls.whiteList).permitAll()
-                                .requestMatchers(SecurityUrls.adminUrls).hasAnyAuthority("admin")
-                                .requestMatchers(SecurityUrls.customerUrls).hasAnyAuthority("customer")
-//                                .requestMatchers(SecurityUrls.personalUrls).hasAnyAuthority("personal")
+                                .requestMatchers(SecurityUrls.adminUrls).hasAnyAuthority("ADMIN")
+                                .requestMatchers(SecurityUrls.customerUrls).hasAnyAuthority("CUSTOMER")
+                                .requestMatchers(SecurityUrls.personalUrls).hasAnyAuthority("PERSONAL")
 //                                .requestMatchers(SecurityUrls.anyAuthenticated).authenticated()
 //                                .anyRequest().permitAll()
                 ).exceptionHandling(exceptionHandling -> exceptionHandling

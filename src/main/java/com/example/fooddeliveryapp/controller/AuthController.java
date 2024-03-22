@@ -1,6 +1,6 @@
 package com.example.fooddeliveryapp.controller;
 
-import com.example.fooddeliveryapp.dto.LoginReq;
+import com.example.fooddeliveryapp.dto.request.LoginReq;
 import com.example.fooddeliveryapp.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
-
     private final AuthService authService;
 
     @ResponseBody

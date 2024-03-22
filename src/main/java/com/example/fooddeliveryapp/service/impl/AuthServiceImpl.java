@@ -1,8 +1,8 @@
 package com.example.fooddeliveryapp.service.impl;
 
 import com.example.fooddeliveryapp.dto.ExceptionDTO;
-import com.example.fooddeliveryapp.dto.LoginReq;
-import com.example.fooddeliveryapp.dto.LoginRes;
+import com.example.fooddeliveryapp.dto.request.LoginReq;
+import com.example.fooddeliveryapp.dto.response.LoginRes;
 import com.example.fooddeliveryapp.entity.Users;
 import com.example.fooddeliveryapp.service.AuthService;
 import com.example.fooddeliveryapp.utility.JwtUtil;

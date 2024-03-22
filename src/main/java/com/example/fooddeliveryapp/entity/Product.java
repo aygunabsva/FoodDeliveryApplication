@@ -16,7 +16,8 @@ public class Product {
     private String pictureUrl;
 
     @Enumerated(EnumType.STRING)
-    private FoodCategory foodCategory;
+    private
+    FoodCategory foodCategory;
 
     @ManyToOne
     @JoinColumn(name = "menu_id")
