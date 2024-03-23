@@ -52,7 +52,6 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-
     public List<CustomerDTO> getAll() {
         log.info("customer getAll method started");
         List<Customer> customers = customerRepository.findAll();
@@ -62,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerDTO customerDTO = customerMapper.toDto(customer);
             customerDTOS.add(customerDTO);
         }
-        log.info("customer getAll method done");
+        log.info("customer getAll method finished");
         return customerDTOS;
     }
 

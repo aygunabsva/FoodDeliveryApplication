@@ -28,6 +28,7 @@ public class PersonalServiceImpl implements PersonalService {
     private final UsersRepository usersRepository;
     private final PersonalMapper personalMapper;
     private final UserMapper userMapper;
+
     public PersonalDTO register(PersonalRegisterDTO personalRegisterDTO) {
         log.info("personal register method started");
         if (usersRepository.findByUsername(personalRegisterDTO.getUsername()).isPresent()) {

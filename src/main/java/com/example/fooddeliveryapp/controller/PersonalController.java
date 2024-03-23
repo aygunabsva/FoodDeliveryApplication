@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonalController {
     private final PersonalService personalService;
 
-    @PostMapping("/add")
+    @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody @Valid PersonalRegisterDTO personalRegisterDTO) {
         personalService.register(personalRegisterDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();

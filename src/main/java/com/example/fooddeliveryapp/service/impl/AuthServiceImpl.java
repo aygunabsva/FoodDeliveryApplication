@@ -1,6 +1,6 @@
 package com.example.fooddeliveryapp.service.impl;
 
-import com.example.fooddeliveryapp.dto.ExceptionDTO;
+import com.example.fooddeliveryapp.dto.response.ExceptionDTO;
 import com.example.fooddeliveryapp.dto.request.LoginReq;
 import com.example.fooddeliveryapp.dto.response.LoginRes;
 import com.example.fooddeliveryapp.entity.Users;
@@ -50,5 +50,4 @@ public class AuthServiceImpl implements AuthService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionDTO);
         }
     }
-
 }

@@ -1,6 +1,8 @@
 package com.example.fooddeliveryapp.controller;
 
+import com.example.fooddeliveryapp.dto.request.MenuDeleteRequestDTO;
 import com.example.fooddeliveryapp.dto.request.MenuReqDTO;
+import com.example.fooddeliveryapp.dto.request.MenuUpdateRequestDTO;
 import com.example.fooddeliveryapp.dto.response.MenuDTO;
 import com.example.fooddeliveryapp.service.MenuService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +22,15 @@ public class MenuController {
         return new ResponseEntity<>(createdMenu, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMenu(@PathVariable("id") Long menuId) {
-        menuService.deleteMenu(menuId);
+    @PutMapping("/update")
+    public ResponseEntity<MenuDTO> updateMenuName(@RequestBody MenuUpdateRequestDTO requestDTO) {
+        MenuDTO updatedMenu = menuService.updateMenuName(requestDTO);
+        return new ResponseEntity<>(updatedMenu, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteMenu(@RequestBody MenuDeleteRequestDTO requestDTO) {
+        menuService.deleteMenu(requestDTO.getId());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

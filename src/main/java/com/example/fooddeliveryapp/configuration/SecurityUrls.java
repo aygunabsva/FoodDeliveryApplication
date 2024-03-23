@@ -17,12 +17,13 @@ public class SecurityUrls {
 
     static String[] adminUrls = {
             "/admin/**",
-            "/personal/add",
-            "/restaurant/create"
+            "/personal/register",
+            "/restaurant/create",
+            "/restaurant/delete"
     };
 
     static String[] personalUrls = {
-            "/product/add",
+            "/product/**",
             "/menu/**"
     };
 

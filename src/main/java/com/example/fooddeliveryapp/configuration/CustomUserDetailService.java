@@ -23,7 +23,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     private void checkUserProfileStatus(Users user) {
         if (user.getUserStatus() != UserStatus.ACTIVE) {
-            throw new NotFoundException("Username is not Active");
+            throw new NotFoundException("User is not Active");
         }
     }
 

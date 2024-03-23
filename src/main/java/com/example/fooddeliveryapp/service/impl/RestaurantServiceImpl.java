@@ -16,10 +16,21 @@ import org.springframework.stereotype.Service;
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final RestaurantMapper restaurantMapper;
+
     @Override
     public RestaurantDTO createRestaurant(RestaurantReqDTO restaurantReqDTO) {
+        log.info("restaurant add method started");
         Restaurant restaurant = restaurantMapper.toEntity(restaurantReqDTO);
         Restaurant savedRestaurant = restaurantRepository.save(restaurant);
-        return restaurantMapper.toDTO(savedRestaurant);
+        RestaurantDTO restaurantDTO = restaurantMapper.toDTO(savedRestaurant);
+        log.info("restaurant add method finished");
+        return restaurantDTO;
+    }
+
+    @Override
+    public void deleteRestaurant(Long restaurantId) {
+        log.info("restaurant delete method started");
+        restaurantRepository.deleteById(restaurantId);
+        log.info("restaurant delete method finished");
     }
 }
