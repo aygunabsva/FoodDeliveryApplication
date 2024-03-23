@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final UserMapper userMapper;
 
     public CustomerDTO register(CustomerRegisterDTO customerRegisterDTO) {
-        log.info("customer register method started");
+        log.info("Customer register method started");
         if (usersRepository.findByUsername(customerRegisterDTO.getUsername()).isPresent()) {
             throw new AlreadyExistException("This user already exist");
         } else {
@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public List<CustomerDTO> getAll() {
-        log.info("customer getAll method started");
+        log.info("Customer getAll method started");
         List<Customer> customers = customerRepository.findAll();
         List<CustomerDTO> customerDTOS = new ArrayList<>();
 
@@ -61,8 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerDTO customerDTO = customerMapper.toDto(customer);
             customerDTOS.add(customerDTO);
         }
-        log.info("customer getAll method finished");
+        log.info("Found {} customers", customerDTOS.size());
         return customerDTOS;
     }
-
 }

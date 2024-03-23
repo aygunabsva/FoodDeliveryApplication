@@ -47,6 +47,4 @@ public class CustomerRegisterDTO {
 
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
-
-//    private Set<Authority> authorities = new HashSet<>();
 }

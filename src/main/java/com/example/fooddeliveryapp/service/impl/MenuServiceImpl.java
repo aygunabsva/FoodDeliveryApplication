@@ -23,23 +23,23 @@ public class MenuServiceImpl implements MenuService {
     private final RestaurantRepository restaurantRepository;
 
     public MenuDTO createMenu(MenuReqDTO menuReqDTO) {
-        log.info("menu add method started");
+        log.info("Menu add method started");
         Menu menu = menuMapper.toEntity(menuReqDTO);
         Menu savedMenu = menuRepository.save(menu);
         MenuDTO menuDTO = menuMapper.toDTO(savedMenu);
-        log.info("restaurant add method finished");
+        log.info("Created a new menu: {}", menuReqDTO.getName());
         return menuDTO;
     }
 
     public void deleteMenu(Long menuId) {
-        log.info("menu delete method started");
+        log.info("Menu delete method started");
         menuRepository.deleteById(menuId);
-        log.info("menu delete method finished");
+        log.info("Deleted a product with the ID: {}", menuId);
     }
 
     @Override
     public MenuDTO updateMenuName(MenuUpdateRequestDTO requestDTO) {
-        log.info("menu update method started");
+        log.info("Menu update method started");
         Menu existingMenu = menuRepository.findById(requestDTO.getId())
                 .orElseThrow(() -> new NotFoundException("Menu not found with id: " + requestDTO.getId()));
 
@@ -51,7 +51,7 @@ public class MenuServiceImpl implements MenuService {
 
         Menu savedMenu = menuRepository.save(existingMenu);
         MenuDTO menuDTO = menuMapper.toDTO(savedMenu);
-        log.info("menu update method finished");
+        log.info("Updated menu with ID: {}", requestDTO.getId());
         return menuDTO;
     }
 }

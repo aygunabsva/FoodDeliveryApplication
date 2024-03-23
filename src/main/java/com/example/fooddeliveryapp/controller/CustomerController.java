@@ -22,7 +22,7 @@ public class CustomerController {
         customerService.register(customerRegisterDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-    @GetMapping("/customers")
+    @GetMapping("/all")
     public List<CustomerDTO> getAll(){
         return customerService.getAll();
     }

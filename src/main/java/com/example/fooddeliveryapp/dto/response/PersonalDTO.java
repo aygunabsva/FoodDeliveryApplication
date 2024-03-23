@@ -14,5 +14,4 @@ public class PersonalDTO {
     private String phone;
     private String address;
     private UserStatus userStatus;
-    private String authorities;
 }

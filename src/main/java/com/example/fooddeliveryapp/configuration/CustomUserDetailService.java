@@ -3,6 +3,7 @@ package com.example.fooddeliveryapp.configuration;
 import com.example.fooddeliveryapp.entity.Authority;
 import com.example.fooddeliveryapp.entity.Users;
 import com.example.fooddeliveryapp.enums.UserStatus;
+import com.example.fooddeliveryapp.exception.IsNotActiveException;
 import com.example.fooddeliveryapp.exception.NotFoundException;
 import com.example.fooddeliveryapp.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     private void checkUserProfileStatus(Users user) {
         if (user.getUserStatus() != UserStatus.ACTIVE) {
-            throw new NotFoundException("User is not Active");
+            throw new IsNotActiveException(user.getUsername() + " is not active");
         }
     }
 
