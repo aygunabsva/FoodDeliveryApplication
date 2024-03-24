@@ -46,7 +46,7 @@ public class JwtUtil {
         key = initializeKey();
         user = usersRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new NotFoundException("user not found"));
-        Claims claims = Jwts.claims().setSubject(user.getUsername());
+        Jwts.claims().setSubject(user.getUsername());
         Set<Authority> authorities = user.getAuthorities();
         List<String> roles = new ArrayList<>();
         for (Authority authority : authorities) {
@@ -55,6 +55,7 @@ public class JwtUtil {
         Map<String, Object> claimsMap = new HashMap<>();
         claimsMap.put("authorities", roles);
         claimsMap.put("username", user.getUsername());
+        claimsMap.put("user_id", user.getId());
 
         Date tokenCreateTime = new Date();
         Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValidity));

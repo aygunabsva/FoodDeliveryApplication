@@ -62,10 +62,11 @@ public class ProductServiceImpl implements ProductService {
         if (products.isEmpty()) {
             throw new NotFoundException("Product in this name not found");
         }
-        log.info("Found {} products with a name {}", products.size(), name);
-        return products.stream()
+        List<ProductDTO> productDTOS = products.stream()
                 .map(productMapper::toDTO)
-                .collect(Collectors.toList());
+                .toList();
+        log.info("Found {} products with a name {}", products.size(), name);
+        return productDTOS;
     }
 
     @Override
@@ -78,6 +79,19 @@ public class ProductServiceImpl implements ProductService {
         log.info("Found {} products with a category {}", products.size(), foodCategory);
         return products.stream()
                 .map(productMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDTO> findByPrice(int maxPrice) {
+        log.info("Read product by price method started");
+        List<Product> products = productRepository.findByPrice(maxPrice);
+        if (products.isEmpty()) {
+            throw new NotFoundException("Product Not Found");
+        }
+        log.info("Found {} products with a price lower than {}", products.size(), maxPrice);
+        return products.stream()
+                .map(productMapper::toDTO)
                 .collect(Collectors.toList());
     }
 }

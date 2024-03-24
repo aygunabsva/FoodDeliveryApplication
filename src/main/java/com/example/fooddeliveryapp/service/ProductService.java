@@ -17,4 +17,7 @@ public interface ProductService {
     List<ProductDTO> readProductByName(String name);
 
     List<ProductDTO> readProductByCategory(String foodCategory);
+
+    List<ProductDTO> findByPrice(int maxPrice);
+
 }

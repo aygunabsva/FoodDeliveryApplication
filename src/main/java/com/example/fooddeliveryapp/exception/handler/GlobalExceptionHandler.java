@@ -33,6 +33,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IsNotActiveException.class)
     public ResponseEntity<String> handleIsNotActiveException(IsNotActiveException ex) {
+        log.error("IsNotActiveException ->  {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }

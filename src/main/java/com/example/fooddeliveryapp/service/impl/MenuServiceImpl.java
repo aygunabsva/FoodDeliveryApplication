@@ -10,6 +10,7 @@ import com.example.fooddeliveryapp.mapper.MenuMapper;
 import com.example.fooddeliveryapp.repository.MenuRepository;
 import com.example.fooddeliveryapp.repository.RestaurantRepository;
 import com.example.fooddeliveryapp.service.MenuService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,15 @@ public class MenuServiceImpl implements MenuService {
         return menuDTO;
     }
 
+    @Transactional
     public void deleteMenu(Long menuId) {
         log.info("Menu delete method started");
-        menuRepository.deleteById(menuId);
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new NotFoundException("Menu not found with id: " + menuId));
+
+        menuRepository.delete(menu);
         log.info("Deleted a product with the ID: {}", menuId);
+
     }
 
     @Override

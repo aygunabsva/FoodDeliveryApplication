@@ -32,12 +32,12 @@ public class AuthServiceImpl implements AuthService {
                             loginReq.getPassword()));
             log.info("authentication details: {}", authentication);
             String username = authentication.getName();
-            Users client = new Users(username, "");
-            String token = jwtUtil.createToken(client);
+            Users users = new Users(username, "");
+            String token = jwtUtil.createToken(users);
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
             LoginRes loginRes = new LoginRes(username,token);
-            log.info("user: {} logged in",  client.getUsername());
+            log.info("user: {} logged in",  users.getUsername());
             return ResponseEntity.status(HttpStatus.OK).headers(headers).body(loginRes);
 
         }catch (BadCredentialsException e){

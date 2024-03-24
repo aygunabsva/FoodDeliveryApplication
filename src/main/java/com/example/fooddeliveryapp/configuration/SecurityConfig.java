@@ -1,5 +1,6 @@
 package com.example.fooddeliveryapp.configuration;
 
+import com.example.fooddeliveryapp.enums.Roles;
 import com.example.fooddeliveryapp.filter.JwtAuthorizationFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -39,9 +40,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers(SecurityUrls.whiteList).permitAll()
-                                .requestMatchers(SecurityUrls.adminUrls).hasAnyAuthority("ADMIN")
-                                .requestMatchers(SecurityUrls.customerUrls).hasAnyAuthority("CUSTOMER")
-                                .requestMatchers(SecurityUrls.personalUrls).hasAnyAuthority("PERSONAL")
+                                .requestMatchers(SecurityUrls.adminUrls).hasAnyAuthority(Roles.ADMIN.name())
+                                .requestMatchers(SecurityUrls.customerUrls).hasAnyAuthority(Roles.CUSTOMER.name())
+                                .requestMatchers(SecurityUrls.personalUrls).hasAnyAuthority(Roles.PERSONAL.name())
 //                                .requestMatchers(SecurityUrls.anyAuthenticated).authenticated()
 //                                .anyRequest().permitAll()
                 ).exceptionHandling(exceptionHandling -> exceptionHandling

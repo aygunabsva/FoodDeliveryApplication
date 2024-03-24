@@ -16,7 +16,8 @@ public class SecurityUrls {
             "/product/name/**",
             "/product/category/**",
             "/restaurant/all",
-            "/restaurant/**"
+            "/restaurant/**",
+            "/product/price/**"
 
     };
 
@@ -25,8 +26,8 @@ public class SecurityUrls {
             "/personal/register",
             "/restaurant/create",
             "/restaurant/delete",
-            "/customer/all",
-            "/personal/all"
+            "/personal/all",
+            "/customer/all"
     };
 
     static String[] personalUrls = {
@@ -35,6 +36,8 @@ public class SecurityUrls {
     };
 
     static String[] customerUrls = {
+            "/rating/add",
+
     };
 
 //    static String[] anyAuthenticated = {

@@ -17,26 +17,29 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/create")
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductReqDTO productReqDTO) {
-        ProductDTO createdProduct = productService.createProduct(productReqDTO);
-        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductDTO add(@RequestBody ProductReqDTO productReqDTO) {
+        return productService.createProduct(productReqDTO);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductUpdateRequestDTO requestDTO) {
+    public ResponseEntity<ProductDTO> update(@RequestBody ProductUpdateRequestDTO requestDTO) {
         ProductDTO updatedProduct = productService.updateProduct(requestDTO);
-        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
     }
     @GetMapping("/name/{productName}")
-    public ResponseEntity<List<ProductDTO>> readProductByName(@PathVariable String productName) {
-        List<ProductDTO> products = productService.readProductByName(productName);
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    public List<ProductDTO> getByName(@PathVariable String productName) {
+        return productService.readProductByName(productName);
     }
 
     @GetMapping("/category/{foodCategory}")
-    public ResponseEntity<List<ProductDTO>> searchProductsByCategory(@PathVariable String foodCategory) {
-        List<ProductDTO> products = productService.readProductByCategory(foodCategory);
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    public List<ProductDTO> getByCategory(@PathVariable String foodCategory) {
+        return productService.readProductByCategory(foodCategory);
+    }
+
+    @GetMapping("/price/{maxPrice}")
+    public List<ProductDTO> getByPrice(@PathVariable int maxPrice) {
+        return productService.findByPrice(maxPrice);
     }
 
     @DeleteMapping("/delete")

@@ -28,9 +28,16 @@ public class MenuController {
         return new ResponseEntity<>(updatedMenu, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteMenu(@RequestBody MenuDeleteRequestDTO requestDTO) {
-        menuService.deleteMenu(requestDTO.getId());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @DeleteMapping("/delete/{menuId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> deleteMenu(@PathVariable Long menuId) {
+        menuService.deleteMenu(menuId);
+        return ResponseEntity.noContent().build();
     }
+
+//    @DeleteMapping("/delete")
+//    public ResponseEntity<Void> deleteMenu(@RequestBody MenuDeleteRequestDTO requestDTO) {
+//        menuService.deleteMenu(requestDTO.getId());
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 }
