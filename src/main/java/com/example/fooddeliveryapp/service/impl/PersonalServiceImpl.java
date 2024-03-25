@@ -30,7 +30,7 @@ public class PersonalServiceImpl implements PersonalService {
     private final UsersRepository usersRepository;
     private final PersonalMapper personalMapper;
     private final UserMapper userMapper;
-
+    @Override
     public PersonalDTO register(PersonalRegisterDTO personalRegisterDTO) {
         log.info("Personal register method started");
         if (usersRepository.findByUsername(personalRegisterDTO.getUsername()).isPresent()) {

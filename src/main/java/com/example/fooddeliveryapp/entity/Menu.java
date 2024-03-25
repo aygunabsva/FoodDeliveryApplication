@@ -14,8 +14,8 @@ public class Menu {
 
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)

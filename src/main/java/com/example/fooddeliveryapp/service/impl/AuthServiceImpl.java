@@ -1,7 +1,7 @@
 package com.example.fooddeliveryapp.service.impl;
 
-import com.example.fooddeliveryapp.dto.response.ExceptionDTO;
 import com.example.fooddeliveryapp.dto.request.LoginReq;
+import com.example.fooddeliveryapp.dto.response.ExceptionDTO;
 import com.example.fooddeliveryapp.dto.response.LoginRes;
 import com.example.fooddeliveryapp.entity.Users;
 import com.example.fooddeliveryapp.service.AuthService;
@@ -24,7 +24,9 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
-    public ResponseEntity<?> authenticate(LoginReq loginReq){
+
+    @Override
+    public ResponseEntity<?> authenticate(LoginReq loginReq) {
         log.info("authenticate method started by: {}", loginReq.getUsername());
         try {
             Authentication authentication =
@@ -36,15 +38,15 @@ public class AuthServiceImpl implements AuthService {
             String token = jwtUtil.createToken(users);
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
-            LoginRes loginRes = new LoginRes(username,token);
-            log.info("user: {} logged in",  users.getUsername());
+            LoginRes loginRes = new LoginRes(username, token);
+            log.info("user: {} logged in", users.getUsername());
             return ResponseEntity.status(HttpStatus.OK).headers(headers).body(loginRes);
 
-        }catch (BadCredentialsException e){
-            ExceptionDTO exceptionDTO = new ExceptionDTO(HttpStatus.BAD_REQUEST.value(),"Invalid username or password");
+        } catch (BadCredentialsException e) {
+            ExceptionDTO exceptionDTO = new ExceptionDTO(HttpStatus.BAD_REQUEST.value(), "Invalid username or password");
             log.error("Error due to {} ", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionDTO);
-        }catch (Exception e){
+        } catch (Exception e) {
             ExceptionDTO exceptionDTO = new ExceptionDTO(HttpStatus.BAD_REQUEST.value(), e.getMessage());
             log.error("Error due to {} ", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionDTO);

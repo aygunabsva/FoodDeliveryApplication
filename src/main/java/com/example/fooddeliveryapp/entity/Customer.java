@@ -19,4 +19,6 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Order> orderHistory;
 
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Basket basket;
 }

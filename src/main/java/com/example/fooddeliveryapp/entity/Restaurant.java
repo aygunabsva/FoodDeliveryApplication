@@ -3,8 +3,6 @@ package com.example.fooddeliveryapp.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Entity
 @Data
 public class Restaurant {
@@ -12,8 +10,10 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     @OneToOne(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Menu menu;
 }

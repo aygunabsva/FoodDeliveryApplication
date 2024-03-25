@@ -37,7 +37,7 @@ public class SecurityUrls {
 
     static String[] customerUrls = {
             "/rating/new",
-
+            "/basket/**"
     };
 
 //    static String[] anyAuthenticated = {

@@ -22,7 +22,7 @@ public class MenuServiceImpl implements MenuService {
     private final MenuRepository menuRepository;
     private final MenuMapper menuMapper;
     private final RestaurantRepository restaurantRepository;
-
+    @Override
     public MenuDTO add(MenuReqDTO menuReqDTO) {
         log.info("Menu add method started");
         Menu menu = menuMapper.toEntity(menuReqDTO);
@@ -32,15 +32,17 @@ public class MenuServiceImpl implements MenuService {
         return menuDTO;
     }
 
+    @Override
     @Transactional
     public void delete(Long menuId) {
         log.info("Menu delete method started");
+
+//        menuRepository.deleteById(menuId);
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> new NotFoundException("Menu not found with id: " + menuId));
-
-        menuRepository.delete(menu);
-        log.info("Deleted a product with the ID: {}", menuId);
-
+        System.out.println(menu.getId());
+        menuRepository.deleteById(menu.getId());
+        log.info("Deleted a menu with the ID: {}", menu.getId());
     }
 
     @Override

@@ -32,6 +32,8 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerMapper customerMapper;
     private final UserMapper userMapper;
 
+
+    @Override
     public CustomerDTO register(CustomerRegisterDTO customerRegisterDTO) {
         log.info("Customer register method started");
         if (usersRepository.findByUsername(customerRegisterDTO.getUsername()).isPresent()) {
@@ -52,6 +54,8 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+
+    @Override
     public List<CustomerDTO> getAll() {
         log.info("Customer getAll method started");
         List<Customer> customers = customerRepository.findAll();
