@@ -4,6 +4,7 @@ import com.example.fooddeliveryapp.dto.request.RestaurantDeleteRequestDTO;
 import com.example.fooddeliveryapp.dto.request.RestaurantReqDTO;
 import com.example.fooddeliveryapp.dto.response.ProductDTO;
 import com.example.fooddeliveryapp.dto.response.RestaurantDTO;
+import com.example.fooddeliveryapp.dto.response.RestaurantRatingDTO;
 import com.example.fooddeliveryapp.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,32 +19,36 @@ import java.util.List;
 public class RestaurantController {
     private final RestaurantService restaurantService;
 
-    @PostMapping("/create")
-    public ResponseEntity<RestaurantDTO> createRestaurant(@RequestBody RestaurantReqDTO restaurantReqDTO) {
-        RestaurantDTO createdRestaurant = restaurantService.createRestaurant(restaurantReqDTO);
-        return new ResponseEntity<>(createdRestaurant, HttpStatus.CREATED);
+    @PostMapping("/new")
+    @ResponseStatus(HttpStatus.CREATED)
+    public RestaurantDTO add(@RequestBody RestaurantReqDTO restaurantReqDTO) {
+        return restaurantService.add(restaurantReqDTO);
     }
-
     @GetMapping("/all")
-    public ResponseEntity<List<RestaurantDTO>> readAllRestaurants() {
-        List<RestaurantDTO> restaurants = restaurantService.getAll();
-        return new ResponseEntity<>(restaurants, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<RestaurantDTO> getAll() {
+        return restaurantService.getAll();
     }
     @GetMapping("/{restaurantName}/products")
-    public ResponseEntity<List<ProductDTO>> getProductsByRestaurantName(@PathVariable String restaurantName) {
-        List<ProductDTO> products = restaurantService.getProductsByRestaurantName(restaurantName);
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductDTO> getProductsByName(@PathVariable String restaurantName) {
+        return restaurantService.getProductsByName(restaurantName);
     }
-
+    @GetMapping("/{restaurantName}/ratings")
+    public ResponseEntity<RestaurantRatingDTO> getRestaurantRatings(@PathVariable String restaurantName) {
+        RestaurantRatingDTO restaurantRatingDTO = restaurantService.getRestaurantRatingByName(restaurantName);
+        return new ResponseEntity<>(restaurantRatingDTO, HttpStatus.OK);
+    }
     @GetMapping("/name/{name}")
-    public ResponseEntity<List<RestaurantDTO>> showRestaurantByName(@PathVariable String name) {
-        List<RestaurantDTO> restaurants = restaurantService.showRestaurantByName(name);
-        return new ResponseEntity<>(restaurants, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public RestaurantDTO getByName(@PathVariable String name) {
+        return restaurantService.getByName(name);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteRestaurant(@RequestBody RestaurantDeleteRequestDTO requestDTO) {
-        restaurantService.deleteRestaurant(requestDTO.getId());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Void delete(@RequestBody RestaurantDeleteRequestDTO requestDTO) {
+        restaurantService.delete(requestDTO.getId());
+        return null;
     }
 }

@@ -6,11 +6,7 @@ import com.example.fooddeliveryapp.service.RatingService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class RatingController {
     private final RatingService ratingService;
 
-    @PostMapping("/add")
-    public ResponseEntity<RatingDTO> addRating(HttpServletRequest request, @RequestBody RatingReqDTO ratingReqDTO) {
-        RatingDTO addedRating = ratingService.addRating(request, ratingReqDTO);
-        return new ResponseEntity<>(addedRating, HttpStatus.CREATED);
+    @PostMapping("/new")
+    @ResponseStatus(HttpStatus.CREATED)
+    public RatingDTO add(HttpServletRequest request, @RequestBody RatingReqDTO ratingReqDTO) {
+        return ratingService.add(request, ratingReqDTO);
     }
 }

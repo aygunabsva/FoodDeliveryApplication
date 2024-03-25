@@ -25,17 +25,19 @@ public class RatingServiceImpl implements RatingService {
     private final JwtUtil jwtUtil;
 
     @Override
-    public RatingDTO addRating(HttpServletRequest request, RatingReqDTO ratingReqDTO) {
+    public RatingDTO add(HttpServletRequest request, RatingReqDTO ratingReqDTO) {
         Integer userId = jwtUtil.getUserId(jwtUtil.resolveClaims(request));
+
+        /*
+         after adding order table, add code for checking if rating user has any order from rated restaurant
+        */
 
         log.info("Rating add method started by userId: {}", userId);
         Long customerId = customerRepository.findByUserId(Long.valueOf(userId)).getId();
-
         ratingReqDTO.setCustomerId(customerId);
         ratingReqDTO.setTimestamp(LocalDateTime.now());
         Rating rating = ratingMapper.toEntity(ratingReqDTO);
         Rating savedRating = ratingRepository.save(rating);
-
         RatingDTO ratingDTO = ratingMapper.toDTO(savedRating);
         log.info("Rating added by customerId: {} for restaurantId: {}", userId, ratingReqDTO.getRestaurantId());
         return ratingDTO;

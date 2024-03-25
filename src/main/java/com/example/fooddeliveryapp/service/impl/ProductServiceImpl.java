@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductDTO createProduct(ProductReqDTO productReqDTO) {
+    public ProductDTO create(ProductReqDTO productReqDTO) {
         log.info("Product add method started");
         Product product = productMapper.toEntity(productReqDTO);
         productRepository.save(product);
@@ -35,20 +35,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Long productId) {
+    public void delete(Long productId) {
         log.info("Product delete method started");
         productRepository.deleteById(productId);
         log.info("Deleted a product with the ID: {}", productId);
     }
 
     @Override
-    public ProductDTO updateProduct(ProductUpdateRequestDTO requestDTO) {
+    public ProductDTO edit(ProductUpdateRequestDTO requestDTO) {
         log.info("Product update method started");
         Product existingProduct = productRepository.findById(requestDTO.getId())
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + requestDTO.getId()));
 
         productMapper.updateProductFromDTO(requestDTO, existingProduct);
-
         Product savedProduct = productRepository.save(existingProduct);
         ProductDTO productDTO = productMapper.toDTO(savedProduct);
         log.info("Updated product with ID: {}", requestDTO.getId());
@@ -56,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> readProductByName(String name) {
+    public List<ProductDTO> readByName(String name) {
         log.info("Read product by name method started");
         List<Product> products = productRepository.findByNameIgnoreCase(name);
         if (products.isEmpty()) {
@@ -70,28 +69,30 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> readProductByCategory(String foodCategory) {
+    public List<ProductDTO> readByCategory(String foodCategory) {
         log.info("Read product by category method started");
         List<Product> products = productRepository.findByFoodCategory(FoodCategory.valueOf(foodCategory.toUpperCase()));
         if (products.isEmpty()) {
             throw new NotFoundException("Product in this category not found");
         }
-        log.info("Found {} products with a category {}", products.size(), foodCategory);
-        return products.stream()
+        List<ProductDTO> productDTOS = products.stream()
                 .map(productMapper::toResponseDTO)
-                .collect(Collectors.toList());
+                .toList();
+        log.info("Found {} products with a category {}", products.size(), foodCategory);
+        return productDTOS;
     }
 
     @Override
-    public List<ProductDTO> findByPrice(int maxPrice) {
+    public List<ProductDTO> readByPrice(int maxPrice) {
         log.info("Read product by price method started");
         List<Product> products = productRepository.findByPrice(maxPrice);
         if (products.isEmpty()) {
             throw new NotFoundException("Product Not Found");
         }
-        log.info("Found {} products with a price lower than {}", products.size(), maxPrice);
-        return products.stream()
+        List<ProductDTO> productDTOS = products.stream()
                 .map(productMapper::toDTO)
-                .collect(Collectors.toList());
+                .toList();
+        log.info("Found {} products with a price lower than {}", products.size(), maxPrice);
+        return productDTOS;
     }
 }

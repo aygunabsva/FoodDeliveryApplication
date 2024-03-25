@@ -1,14 +1,19 @@
 package com.example.fooddeliveryapp.service.impl;
 
 import com.example.fooddeliveryapp.dto.request.RestaurantReqDTO;
+import com.example.fooddeliveryapp.dto.response.CommentsDTO;
 import com.example.fooddeliveryapp.dto.response.ProductDTO;
 import com.example.fooddeliveryapp.dto.response.RestaurantDTO;
+import com.example.fooddeliveryapp.dto.response.RestaurantRatingDTO;
 import com.example.fooddeliveryapp.entity.Menu;
 import com.example.fooddeliveryapp.entity.Product;
+import com.example.fooddeliveryapp.entity.Rating;
 import com.example.fooddeliveryapp.entity.Restaurant;
 import com.example.fooddeliveryapp.exception.NotFoundException;
 import com.example.fooddeliveryapp.mapper.ProductMapper;
+import com.example.fooddeliveryapp.mapper.RatingMapper;
 import com.example.fooddeliveryapp.mapper.RestaurantMapper;
+import com.example.fooddeliveryapp.repository.RatingRepository;
 import com.example.fooddeliveryapp.repository.RestaurantRepository;
 import com.example.fooddeliveryapp.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,11 +29,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
+    private final RatingRepository ratingRepository;
     private final RestaurantMapper restaurantMapper;
     private final ProductMapper productMapper;
+    private final RatingMapper ratingMapper;
+
 
     @Override
-    public RestaurantDTO createRestaurant(RestaurantReqDTO restaurantReqDTO) {
+    public RestaurantDTO add(RestaurantReqDTO restaurantReqDTO) {
         log.info("Restaurant add method started");
         Restaurant restaurant = restaurantMapper.toEntity(restaurantReqDTO);
         Restaurant savedRestaurant = restaurantRepository.save(restaurant);
@@ -39,7 +46,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void deleteRestaurant(Long restaurantId) {
+    public void delete(Long restaurantId) {
         log.info("Restaurant delete method started");
         restaurantRepository.deleteById(restaurantId);
         log.info("Deleted a restaurant with the ID: {}", restaurantId);
@@ -53,9 +60,10 @@ public class RestaurantServiceImpl implements RestaurantService {
             throw new NotFoundException("Restaurant not found");
         }
         List<RestaurantDTO> restaurantDTOS = new ArrayList<>();
-
         for (Restaurant restaurant : restaurants) {
             RestaurantDTO restaurantDTO = restaurantMapper.toDTO(restaurant);
+            Double avgRating = ratingRepository.findAverageRatingByRestaurantId(restaurant.getId());
+            restaurantDTO.setAvgRating(avgRating);
             restaurantDTOS.add(restaurantDTO);
         }
         log.info("Found {} restaurants", restaurantDTOS.size());
@@ -63,20 +71,22 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<RestaurantDTO> showRestaurantByName(String name) {
+    public RestaurantDTO getByName(String name) {
         log.info("Read restaurant by name method started");
-        Optional<Restaurant> restaurants = restaurantRepository.findByNameIgnoreCase(name);
-        if (restaurants.isEmpty()) {
+
+        Restaurant restaurant = restaurantRepository.findRestaurantByNameIgnoreCase(name);
+        if (restaurant.getName().isEmpty()) {
             throw new NotFoundException("Restaurant in this name not found");
         }
-        log.info("Found {} restaurants with a name {}", restaurants.stream(), name);
-        return restaurants.stream()
-                .map(restaurantMapper::toDTO)
-                .collect(Collectors.toList());
+        RestaurantDTO restaurantDTO = restaurantMapper.toDTO(restaurant);
+        restaurantDTO.setAvgRating(ratingRepository.findAverageRatingByRestaurantId(restaurant.getId()));
+        log.info("Found restaurants with a name {}", name);
+        return restaurantDTO;
     }
 
+
     @Override
-    public List<ProductDTO> getProductsByRestaurantName(String restaurantName) {
+    public List<ProductDTO> getProductsByName(String restaurantName) {
         log.info("Read products by restaurant method started");
         Restaurant restaurant = restaurantRepository.findByNameIgnoreCase(restaurantName)
                 .orElseThrow(() -> new NotFoundException("Restaurant not found with name: " + restaurantName));
@@ -85,11 +95,32 @@ public class RestaurantServiceImpl implements RestaurantService {
         if (menu == null) {
             throw new NotFoundException("Menu not found for restaurant: " + restaurantName);
         }
-
         List<Product> products = menu.getProducts();
-        log.info("Found {} products in {} restaurant", products.size(), restaurantName);
-        return products.stream()
+        List<ProductDTO> productDTOS = products.stream()
                 .map(productMapper::toDTO)
-                .collect(Collectors.toList());
+                .toList();
+        log.info("Found {} products in {} restaurant", products.size(), restaurantName);
+        return productDTOS;
     }
+
+    @Override
+    public RestaurantRatingDTO getRestaurantRatingByName(String restaurantName) {
+        Restaurant restaurant = restaurantRepository.findByNameIgnoreCase(restaurantName)
+                .orElseThrow(() -> new NotFoundException("Restaurant not found with name: " + restaurantName));
+
+        Double averageRating = ratingRepository.findAverageRatingByRestaurantId(restaurant.getId());
+
+        List<Rating> ratings = ratingRepository.findByRestaurantsNameIgnoreCase(restaurantName);
+        List<CommentsDTO> commentsDTOS = ratings.stream()
+                .map(ratingMapper::toCommentDTO)
+                .collect(Collectors.toList());
+
+        RestaurantRatingDTO restaurantRatingDTO = new RestaurantRatingDTO();
+        restaurantRatingDTO.setRestaurantName(restaurantName);
+        restaurantRatingDTO.setAverageRating(averageRating);
+        restaurantRatingDTO.setRatings(commentsDTOS);
+
+        return restaurantRatingDTO;
+    }
+
 }

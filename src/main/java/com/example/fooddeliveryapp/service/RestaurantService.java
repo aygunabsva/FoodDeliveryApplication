@@ -1,20 +1,22 @@
 package com.example.fooddeliveryapp.service;
 
 import com.example.fooddeliveryapp.dto.request.RestaurantReqDTO;
-import com.example.fooddeliveryapp.dto.response.CustomerDTO;
 import com.example.fooddeliveryapp.dto.response.ProductDTO;
 import com.example.fooddeliveryapp.dto.response.RestaurantDTO;
+import com.example.fooddeliveryapp.dto.response.RestaurantRatingDTO;
 
 import java.util.List;
 
 public interface RestaurantService {
-    RestaurantDTO createRestaurant(RestaurantReqDTO restaurantReqDTO);
+    RestaurantDTO add(RestaurantReqDTO restaurantReqDTO);
 
-    void deleteRestaurant(Long restaurantId);
+    void delete(Long restaurantId);
 
     List<RestaurantDTO> getAll();
 
-    List<RestaurantDTO> showRestaurantByName(String name);
+    RestaurantDTO getByName(String name);
 
-    List<ProductDTO> getProductsByRestaurantName(String restaurantName);
+    List<ProductDTO> getProductsByName(String restaurantName);
+
+    RestaurantRatingDTO getRestaurantRatingByName(String restaurantName);
 }

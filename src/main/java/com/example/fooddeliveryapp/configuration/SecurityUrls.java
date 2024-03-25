@@ -24,7 +24,7 @@ public class SecurityUrls {
     static String[] adminUrls = {
             "/admin/**",
             "/personal/register",
-            "/restaurant/create",
+            "/restaurant/new",
             "/restaurant/delete",
             "/personal/all",
             "/customer/all"
@@ -36,7 +36,7 @@ public class SecurityUrls {
     };
 
     static String[] customerUrls = {
-            "/rating/add",
+            "/rating/new",
 
     };
 

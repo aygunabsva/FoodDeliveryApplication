@@ -14,9 +14,6 @@ public class Restaurant {
 
     private String name;
 
-    @OneToMany(mappedBy = "restaurants", fetch = FetchType.LAZY)
-    private List<Rating> ratingList;
-
     @OneToOne(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private Menu menu;
 }

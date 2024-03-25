@@ -5,5 +5,5 @@ import com.example.fooddeliveryapp.dto.response.RatingDTO;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface RatingService {
-    RatingDTO addRating(HttpServletRequest request, RatingReqDTO ratingReqDTO);
+    RatingDTO add(HttpServletRequest request, RatingReqDTO ratingReqDTO);
 }

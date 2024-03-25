@@ -1,8 +1,10 @@
 package com.example.fooddeliveryapp.mapper;
 
 import com.example.fooddeliveryapp.dto.request.RatingReqDTO;
+import com.example.fooddeliveryapp.dto.response.CommentsDTO;
 import com.example.fooddeliveryapp.dto.response.RatingDTO;
 import com.example.fooddeliveryapp.dto.response.RestaurantDTO;
+import com.example.fooddeliveryapp.dto.response.RestaurantRatingDTO;
 import com.example.fooddeliveryapp.entity.Customer;
 import com.example.fooddeliveryapp.entity.Rating;
 import com.example.fooddeliveryapp.entity.Restaurant;
@@ -24,6 +26,12 @@ public interface RatingMapper {
     @Mapping(source = "restaurants.id", target = "restaurantId")
     @Mapping(source = "timestamp", target = "timestamp", qualifiedByName = "mapToTimestamp")
     RatingDTO toDTO(Rating rating);
+
+
+    CommentsDTO toCommentDTO(Rating rating);
+
+    RestaurantRatingDTO toRatingDTO(Restaurant restaurant);
+
 
 //    @Named(value = "mapToCustomer")
 //    default Customer mapToCustomer(Long customerId){

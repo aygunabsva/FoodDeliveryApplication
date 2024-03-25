@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface ProductService {
 
-    ProductDTO createProduct(ProductReqDTO productReqDTO);
+    ProductDTO create(ProductReqDTO productReqDTO);
 
-    void deleteProduct(Long productId);
+    void delete(Long productId);
 
-    ProductDTO updateProduct(ProductUpdateRequestDTO requestDTO);
+    ProductDTO edit(ProductUpdateRequestDTO requestDTO);
 
-    List<ProductDTO> readProductByName(String name);
+    List<ProductDTO> readByName(String name);
 
-    List<ProductDTO> readProductByCategory(String foodCategory);
+    List<ProductDTO> readByCategory(String foodCategory);
 
-    List<ProductDTO> findByPrice(int maxPrice);
+    List<ProductDTO> readByPrice(int maxPrice);
 
 }

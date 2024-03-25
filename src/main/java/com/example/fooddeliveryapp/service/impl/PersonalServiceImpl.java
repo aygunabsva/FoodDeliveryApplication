@@ -1,10 +1,8 @@
 package com.example.fooddeliveryapp.service.impl;
 
 import com.example.fooddeliveryapp.dto.request.PersonalRegisterDTO;
-import com.example.fooddeliveryapp.dto.response.CustomerDTO;
 import com.example.fooddeliveryapp.dto.response.PersonalDTO;
 import com.example.fooddeliveryapp.entity.Authority;
-import com.example.fooddeliveryapp.entity.Customer;
 import com.example.fooddeliveryapp.entity.Personal;
 import com.example.fooddeliveryapp.entity.Users;
 import com.example.fooddeliveryapp.enums.Roles;

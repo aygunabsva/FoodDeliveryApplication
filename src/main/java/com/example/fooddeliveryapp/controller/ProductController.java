@@ -1,11 +1,12 @@
 package com.example.fooddeliveryapp.controller;
 
-import com.example.fooddeliveryapp.dto.request.*;
+import com.example.fooddeliveryapp.dto.request.ProductDeleteRequestDTO;
+import com.example.fooddeliveryapp.dto.request.ProductReqDTO;
+import com.example.fooddeliveryapp.dto.request.ProductUpdateRequestDTO;
 import com.example.fooddeliveryapp.dto.response.ProductDTO;
 import com.example.fooddeliveryapp.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,35 +17,40 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    @PostMapping("/create")
+    @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO add(@RequestBody ProductReqDTO productReqDTO) {
-        return productService.createProduct(productReqDTO);
+        return productService.create(productReqDTO);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<ProductDTO> update(@RequestBody ProductUpdateRequestDTO requestDTO) {
-        ProductDTO updatedProduct = productService.updateProduct(requestDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
+    @PutMapping("/edit")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductDTO edit(@RequestBody ProductUpdateRequestDTO requestDTO) {
+        return productService.edit(requestDTO);
     }
+
     @GetMapping("/name/{productName}")
+    @ResponseStatus(HttpStatus.OK)
     public List<ProductDTO> getByName(@PathVariable String productName) {
-        return productService.readProductByName(productName);
+        return productService.readByName(productName);
     }
 
     @GetMapping("/category/{foodCategory}")
+    @ResponseStatus(HttpStatus.OK)
     public List<ProductDTO> getByCategory(@PathVariable String foodCategory) {
-        return productService.readProductByCategory(foodCategory);
+        return productService.readByCategory(foodCategory);
     }
 
     @GetMapping("/price/{maxPrice}")
+    @ResponseStatus(HttpStatus.OK)
     public List<ProductDTO> getByPrice(@PathVariable int maxPrice) {
-        return productService.findByPrice(maxPrice);
+        return productService.readByPrice(maxPrice);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteProduct(@RequestBody ProductDeleteRequestDTO requestDTO) {
-        productService.deleteProduct(requestDTO.getId());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Void deleteProduct(@RequestBody ProductDeleteRequestDTO requestDTO) {
+        productService.delete(requestDTO.getId());
+        return null;
     }
 }

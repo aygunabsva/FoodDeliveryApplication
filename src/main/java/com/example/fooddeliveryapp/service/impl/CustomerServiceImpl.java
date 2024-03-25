@@ -56,7 +56,6 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("Customer getAll method started");
         List<Customer> customers = customerRepository.findAll();
         List<CustomerDTO> customerDTOS = new ArrayList<>();
-
         for (Customer customer : customers) {
             CustomerDTO customerDTO = customerMapper.toDto(customer);
             customerDTOS.add(customerDTO);
