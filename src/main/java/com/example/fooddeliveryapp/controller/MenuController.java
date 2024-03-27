@@ -26,7 +26,7 @@ public class MenuController {
         return menuService.edit(requestDTO);
     }
 
-    @DeleteMapping("/delete/{menuId}")
+    @DeleteMapping("/{menuId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Void delete(@PathVariable Long menuId) {
         menuService.delete(menuId);

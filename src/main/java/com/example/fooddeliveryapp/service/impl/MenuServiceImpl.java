@@ -36,8 +36,6 @@ public class MenuServiceImpl implements MenuService {
     @Transactional
     public void delete(Long menuId) {
         log.info("Menu delete method started");
-
-//        menuRepository.deleteById(menuId);
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> new NotFoundException("Menu not found with id: " + menuId));
         System.out.println(menu.getId());

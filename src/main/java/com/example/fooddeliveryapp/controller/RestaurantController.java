@@ -1,14 +1,11 @@
 package com.example.fooddeliveryapp.controller;
 
-import com.example.fooddeliveryapp.dto.request.RestaurantDeleteRequestDTO;
 import com.example.fooddeliveryapp.dto.request.RestaurantReqDTO;
 import com.example.fooddeliveryapp.dto.response.ProductDTO;
 import com.example.fooddeliveryapp.dto.response.RestaurantDTO;
-import com.example.fooddeliveryapp.dto.response.RestaurantRatingDTO;
 import com.example.fooddeliveryapp.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,21 +31,17 @@ public class RestaurantController {
     public List<ProductDTO> getProductsByName(@PathVariable String restaurantName) {
         return restaurantService.getProductsByName(restaurantName);
     }
-    @GetMapping("/{restaurantName}/ratings")
-    public ResponseEntity<RestaurantRatingDTO> getRestaurantRatings(@PathVariable String restaurantName) {
-        RestaurantRatingDTO restaurantRatingDTO = restaurantService.getRestaurantRatingByName(restaurantName);
-        return new ResponseEntity<>(restaurantRatingDTO, HttpStatus.OK);
-    }
-    @GetMapping("/name/{name}")
+
+    @GetMapping("/{name}")
     @ResponseStatus(HttpStatus.OK)
     public RestaurantDTO getByName(@PathVariable String name) {
         return restaurantService.getByName(name);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/{restaurantId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Void delete(@RequestBody RestaurantDeleteRequestDTO requestDTO) {
-        restaurantService.delete(requestDTO.getId());
+    public Void delete(@PathVariable Long restaurantId) {
+        restaurantService.delete(restaurantId);
         return null;
     }
 }

@@ -13,17 +13,13 @@ public class SecurityUrls {
             "/swagger-ui.html",
             "/auth/**",
             "/customer/register",
-            "/product/name/**",
-            "/product/category/**",
-            "/restaurant/all",
+            "/personal/register",
+            "/product/**",
             "/restaurant/**",
-            "/product/price/**"
-
+            "/rating/**"
     };
 
     static String[] adminUrls = {
-            "/admin/**",
-            "/personal/register",
             "/restaurant/new",
             "/restaurant/delete",
             "/personal/all",
@@ -31,14 +27,18 @@ public class SecurityUrls {
     };
 
     static String[] personalUrls = {
-            "/product/**",
+            "/product/new",
+            "/product/edit",
+            "/product/delete",
             "/menu/**"
     };
 
     static String[] customerUrls = {
             "/rating/new",
-            "/basket/**"
+            "/basket/**",
+            "/order/**"
     };
+
 
 //    static String[] anyAuthenticated = {
 //

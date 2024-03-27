@@ -1,11 +1,16 @@
 package com.example.fooddeliveryapp.service.impl;
 
 import com.example.fooddeliveryapp.dto.request.RatingReqDTO;
+import com.example.fooddeliveryapp.dto.response.CommentsDTO;
 import com.example.fooddeliveryapp.dto.response.RatingDTO;
+import com.example.fooddeliveryapp.dto.response.RestaurantRatingDTO;
 import com.example.fooddeliveryapp.entity.Rating;
+import com.example.fooddeliveryapp.entity.Restaurant;
+import com.example.fooddeliveryapp.exception.NotFoundException;
 import com.example.fooddeliveryapp.mapper.RatingMapper;
 import com.example.fooddeliveryapp.repository.CustomerRepository;
 import com.example.fooddeliveryapp.repository.RatingRepository;
+import com.example.fooddeliveryapp.repository.RestaurantRepository;
 import com.example.fooddeliveryapp.service.RatingService;
 import com.example.fooddeliveryapp.utility.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -21,6 +28,7 @@ import java.time.LocalDateTime;
 public class RatingServiceImpl implements RatingService {
     private final RatingRepository ratingRepository;
     private final CustomerRepository customerRepository;
+    private final RestaurantRepository restaurantRepository;
     private final RatingMapper ratingMapper;
     private final JwtUtil jwtUtil;
 
@@ -41,5 +49,25 @@ public class RatingServiceImpl implements RatingService {
         RatingDTO ratingDTO = ratingMapper.toDTO(savedRating);
         log.info("Rating added by customerId: {} for restaurantId: {}", userId, ratingReqDTO.getRestaurantId());
         return ratingDTO;
+    }
+
+    @Override
+    public RestaurantRatingDTO getRestaurantRatingByName(String restaurantName) {
+        Restaurant restaurant = restaurantRepository.findByNameIgnoreCase(restaurantName)
+                .orElseThrow(() -> new NotFoundException("Restaurant not found with name: " + restaurantName));
+
+        Double averageRating = ratingRepository.findAverageRatingByRestaurantId(restaurant.getId());
+
+        List<Rating> ratings = ratingRepository.findByRestaurantsNameIgnoreCase(restaurantName);
+        List<CommentsDTO> commentsDTOS = ratings.stream()
+                .map(ratingMapper::toCommentDTO)
+                .collect(Collectors.toList());
+
+        RestaurantRatingDTO restaurantRatingDTO = new RestaurantRatingDTO();
+        restaurantRatingDTO.setRestaurantName(restaurantName);
+        restaurantRatingDTO.setAverageRating(averageRating);
+        restaurantRatingDTO.setRatings(commentsDTOS);
+
+        return restaurantRatingDTO;
     }
 }

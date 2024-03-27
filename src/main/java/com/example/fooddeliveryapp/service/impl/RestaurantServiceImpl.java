@@ -32,8 +32,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     private final RatingRepository ratingRepository;
     private final RestaurantMapper restaurantMapper;
     private final ProductMapper productMapper;
-    private final RatingMapper ratingMapper;
-
 
     @Override
     public RestaurantDTO add(RestaurantReqDTO restaurantReqDTO) {
@@ -103,24 +101,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         return productDTOS;
     }
 
-    @Override
-    public RestaurantRatingDTO getRestaurantRatingByName(String restaurantName) {
-        Restaurant restaurant = restaurantRepository.findByNameIgnoreCase(restaurantName)
-                .orElseThrow(() -> new NotFoundException("Restaurant not found with name: " + restaurantName));
 
-        Double averageRating = ratingRepository.findAverageRatingByRestaurantId(restaurant.getId());
-
-        List<Rating> ratings = ratingRepository.findByRestaurantsNameIgnoreCase(restaurantName);
-        List<CommentsDTO> commentsDTOS = ratings.stream()
-                .map(ratingMapper::toCommentDTO)
-                .collect(Collectors.toList());
-
-        RestaurantRatingDTO restaurantRatingDTO = new RestaurantRatingDTO();
-        restaurantRatingDTO.setRestaurantName(restaurantName);
-        restaurantRatingDTO.setAverageRating(averageRating);
-        restaurantRatingDTO.setRatings(commentsDTOS);
-
-        return restaurantRatingDTO;
-    }
 
 }

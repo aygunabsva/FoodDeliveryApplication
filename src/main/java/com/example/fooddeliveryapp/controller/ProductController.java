@@ -1,6 +1,5 @@
 package com.example.fooddeliveryapp.controller;
 
-import com.example.fooddeliveryapp.dto.request.ProductDeleteRequestDTO;
 import com.example.fooddeliveryapp.dto.request.ProductReqDTO;
 import com.example.fooddeliveryapp.dto.request.ProductUpdateRequestDTO;
 import com.example.fooddeliveryapp.dto.response.ProductDTO;
@@ -29,28 +28,28 @@ public class ProductController {
         return productService.edit(requestDTO);
     }
 
-    @GetMapping("/name/{productName}")
+    @GetMapping("/{productName}")
     @ResponseStatus(HttpStatus.OK)
     public List<ProductDTO> getByName(@PathVariable String productName) {
         return productService.readByName(productName);
     }
 
-    @GetMapping("/category/{foodCategory}")
+    @GetMapping("/{productCategory}")
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductDTO> getByCategory(@PathVariable String foodCategory) {
-        return productService.readByCategory(foodCategory);
+    public List<ProductDTO> getByCategory(@PathVariable String productCategory) {
+        return productService.readByCategory(productCategory);
     }
 
-    @GetMapping("/price/{maxPrice}")
+    @GetMapping("/{maxPrice}")
     @ResponseStatus(HttpStatus.OK)
     public List<ProductDTO> getByPrice(@PathVariable int maxPrice) {
         return productService.readByPrice(maxPrice);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Void deleteProduct(@RequestBody ProductDeleteRequestDTO requestDTO) {
-        productService.delete(requestDTO.getId());
+    public Void deleteProduct(@PathVariable Long productId) {
+        productService.delete(productId);
         return null;
     }
 }

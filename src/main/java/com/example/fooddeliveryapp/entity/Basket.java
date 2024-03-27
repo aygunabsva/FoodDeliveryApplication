@@ -31,5 +31,4 @@ public class Basket {
 
     @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
-
 }

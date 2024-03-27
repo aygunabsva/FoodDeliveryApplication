@@ -18,5 +18,4 @@ public interface RestaurantService {
 
     List<ProductDTO> getProductsByName(String restaurantName);
 
-    RestaurantRatingDTO getRestaurantRatingByName(String restaurantName);
 }

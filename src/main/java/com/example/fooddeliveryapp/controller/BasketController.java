@@ -6,7 +6,10 @@ import com.example.fooddeliveryapp.service.BasketServive;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,9 +23,24 @@ public class BasketController {
         return basketServive.add(request, basketDTO);
     }
 
-    @PutMapping("/{basketId}")
+    @PutMapping("edit/{basketId}")
     @ResponseStatus(HttpStatus.OK)
     public BasketDTO updateBasket(@PathVariable Long basketId, @RequestParam Integer quantity) {
         return basketServive.updateBasket(basketId, quantity);
     }
+
+    @GetMapping("/all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<BasketDTO> getByCustomer(HttpServletRequest request) {
+        return basketServive.getByCustomerId(request);
+    }
+
+    @DeleteMapping("/{basketId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Void delete(@PathVariable Long basketId) {
+        basketServive.delete(basketId);
+        return null;
+    }
+
+
 }
